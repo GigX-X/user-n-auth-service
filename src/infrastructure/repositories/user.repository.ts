@@ -7,4 +7,8 @@ export class UserRepository implements IUserRepo {
         const userDocument = new UserModel(user);
         await userDocument.save();
     }
+
+    async findUserByEmail(email: string): Promise<User | null> {
+        return await UserModel.findOne({ email }); 
+    }
 }
