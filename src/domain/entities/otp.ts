@@ -1,9 +1,9 @@
 import { ObjectId } from "mongoose";
-export class User {
+export class Otp {
   constructor(
-    public username: string,
-    public password: string,
     public email: string,
+    public otp: string,
+    public createdAt: Date,
     public _id?: ObjectId
   ) {}
 }
