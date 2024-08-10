@@ -3,15 +3,18 @@ import { UserRepository } from "../../infrastructure/repositories/user.repositor
 import { generateOtp, sendMail } from "../../shared/utils/mailer";
 import { ISendOtpUseCase } from "../interfaces/use-cases/sendOtp-usecase.interface";
 
-export class SendOtp implements ISendOtpUseCase {
-    constructor(
-        private otpRepository: OtpRepository,
-        private userRepository: UserRepository
-    ) {};
+export class SendOtpUseCase implements ISendOtpUseCase {
+  constructor(
+    private otpRepository: OtpRepository,
+    private userRepository: UserRepository
+  ) {}
 
-    async execute(email: string): Promise<void> {
-        const otp = generateOtp();
-        await this.otpRepository.createOtp(email, otp);
-        await sendMail(email, otp);
-    }
+  async execute(email: string): Promise<void> {
+    const existingUser = await this.userRepository.findUserByEmail(email);
+    if (existingUser) throw new Error("User already exists");
+
+    const otp = generateOtp();
+    await this.otpRepository.createOtp(email, otp);
+    await sendMail(email, otp);
+  }
 }

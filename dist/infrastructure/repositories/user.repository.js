@@ -7,5 +7,8 @@ class UserRepository {
         const userDocument = new user_schema_1.UserModel(user);
         await userDocument.save();
     }
+    async findUserByEmail(email) {
+        return await user_schema_1.UserModel.findOne({ email });
+    }
 }
 exports.UserRepository = UserRepository;

@@ -14,3 +14,18 @@ export interface LoginRequest extends Request {
     password: string;
   };
 }
+
+export interface sendOtpRequest extends Request {
+  body: {
+    email: string;
+  };
+}
+
+export interface verifyOtpRequest extends Request {
+  body: {
+    email: string;
+    password: string;
+    username: string;
+    otp: string;
+  };
+}

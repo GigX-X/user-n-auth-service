@@ -7,6 +7,7 @@ export class OtpRepository implements IOtp {
     async createOtp(email: string, otp: string): Promise<void> {
         const otpDoc = new OtpModel({ email, otp });
         await otpDoc.save();
+        console.log("your email otp:" + otp);
     }
    
     async findOtpByEmail(email: string): Promise<Otp | null> {
