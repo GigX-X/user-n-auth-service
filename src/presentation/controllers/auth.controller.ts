@@ -1,38 +1,22 @@
 import { Response } from "express";
-import { SignUpUseCase } from "../../application/use-cases/signup.usecase";
-import { UserRepository } from "../../infrastructure/repositories/user.repository";
+import { SignUpUseCase } from "../../application/use-cases/user/signup.usecase";
+import { UserRepository } from "../../infrastructure/repositories/user/user.repository";
 import {
   LoginRequest,
-  SignupRequest,
   sendOtpRequest,
   verifyOtpRequest,
 } from "../../shared/types/express";
-import { LoginUseCase } from "../../application/use-cases/login.usecase";
-import { OtpRepository } from "../../infrastructure/repositories/otp.repository";
-import { SendOtpUseCase } from "../../application/use-cases/sendOtp.usecase";
-import { VerifyOtpUseCase } from "../../application/use-cases/verifyOtp.usecase";
+import { LoginUseCase } from "../../application/use-cases/user/login.usecase";
+import { OtpRepository } from "../../infrastructure/repositories/user/otp.repository";
+import { SendOtpUseCase } from "../../application/use-cases/user/sendOtp.usecase";
+import { VerifyOtpUseCase } from "../../application/use-cases/user/verifyOtp.usecase";
 
 const userRepository = new UserRepository();
 const otpRepository = new OtpRepository();
 const signupUseCase = new SignUpUseCase(userRepository);
 const loginUseCase = new LoginUseCase(userRepository);
 const sendOtpUseCase = new SendOtpUseCase(otpRepository, userRepository);
-const verifyOtpUseCase = new VerifyOtpUseCase(otpRepository)
-
-export const signup = async (
-  req: SignupRequest,
-  res: Response
-): Promise<void> => {
-  const { username, password, email } = req.body;
-  try {
-    await signupUseCase.execute(username, password, email);
-    res.status(201).json({ message: "user created and saved successfully" });
-  } catch (error) {
-    res
-      .status(400)
-      .json({ message: "something went wrong in signup controller", error });
-  }
-};
+const verifyOtpUseCase = new VerifyOtpUseCase(otpRepository);
 
 export const login = async (
   req: LoginRequest,
@@ -71,17 +55,15 @@ export const verifyOtpAndSignUp = async (
   try {
     const { email, password, username, otp } = req.body;
     const isOtpValid = await verifyOtpUseCase.execute(email, otp);
-    if(!isOtpValid) res.status(401).json({ message: "invalid OTP" })
-    
+    if (!isOtpValid) res.status(401).json({ message: "invalid OTP" });
+
     await signupUseCase.execute(email, password, username);
 
-    res.status(201).json({ message: "User created successfully "});
+    res.status(201).json({ message: "User created successfully " });
   } catch (error) {
-    res
-      .status(401)
-      .json({
-        message: "something went wrong while verifyOtpAndSignUp",
-        error,
-      });
+    res.status(401).json({
+      message: "something went wrong while verifyOtpAndSignUp",
+      error,
+    });
   }
 };

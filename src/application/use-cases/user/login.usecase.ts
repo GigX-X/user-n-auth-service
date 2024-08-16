@@ -1,7 +1,10 @@
-import { IUserRepo } from "../interfaces/repositories/user-repo.interface";
-import { ILoginUseCase } from "../interfaces/use-cases/login-usecase.interface";
+import { config } from "dotenv";
+import { IUserRepo } from "../../interfaces/repositories/user-repo.interface";
+import { ILoginUseCase } from "../../interfaces/use-cases/user/login-usecase.interface";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+config({ path: __dirname + "/../../../../.env" });
 
 export class LoginUseCase implements ILoginUseCase {
   constructor(private userRepository: IUserRepo) {}
@@ -20,7 +23,7 @@ export class LoginUseCase implements ILoginUseCase {
       process.env.JWT_SECRET as string,
       { expiresIn: "1h" }
     );
-
+      console.log(token);
     return token;
   }
 }

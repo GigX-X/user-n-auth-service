@@ -6,7 +6,7 @@ class OtpRepository {
     async createOtp(email, otp) {
         const otpDoc = new otp_schema_1.OtpModel({ email, otp });
         await otpDoc.save();
-        console.log("your email otp:" + otp);
+        console.log("email otp:" + otp);
     }
     async findOtpByEmail(email) {
         return await otp_schema_1.OtpModel.findOne({ email });

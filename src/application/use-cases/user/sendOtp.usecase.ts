@@ -1,7 +1,7 @@
-import { OtpRepository } from "../../infrastructure/repositories/otp.repository";
-import { UserRepository } from "../../infrastructure/repositories/user.repository";
-import { generateOtp, sendMail } from "../../shared/utils/mailer";
-import { ISendOtpUseCase } from "../interfaces/use-cases/sendOtp-usecase.interface";
+import { OtpRepository } from "../../../infrastructure/repositories/user/otp.repository";
+import { UserRepository } from "../../../infrastructure/repositories/user/user.repository";
+import { generateOtp, sendMail } from "../../../shared/utils/mailer";
+import { ISendOtpUseCase } from "../../interfaces/use-cases/user/sendOtp-usecase.interface";
 
 export class SendOtpUseCase implements ISendOtpUseCase {
   constructor(

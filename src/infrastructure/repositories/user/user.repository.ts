@@ -1,6 +1,6 @@
-import { IUserRepo } from "../../application/interfaces/repositories/user-repo.interface";
-import { User } from "../../domain/entities/user";
-import { UserModel } from "../models/user.schema";
+import { IUserRepo } from "../../../application/interfaces/repositories/user-repo.interface";
+import { User } from "../../../domain/entities/user";
+import { UserModel } from "../../models/user.schema";
 
 export class UserRepository implements IUserRepo {
     async addUser(user: User): Promise<void> {

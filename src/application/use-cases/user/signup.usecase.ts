@@ -1,6 +1,6 @@
-import { User } from "../../domain/entities/user";
-import { IUserRepo } from "../interfaces/repositories/user-repo.interface";
-import { ISignupUseCase } from "../interfaces/use-cases/signup-usecase.interface";
+import { User } from "../../../domain/entities/user";
+import { IUserRepo } from "../../interfaces/repositories/user-repo.interface";
+import { ISignupUseCase } from "../../interfaces/use-cases/user/signup-usecase.interface";
 import bcryptjs from "bcryptjs";
 
 

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyOtpAndSignUp = exports.sendOtp = exports.login = exports.signup = void 0;
+exports.verifyOtpAndSignUp = exports.sendOtp = exports.login = void 0;
 const signup_usecase_1 = require("../../application/use-cases/signup.usecase");
 const user_repository_1 = require("../../infrastructure/repositories/user.repository");
 const login_usecase_1 = require("../../application/use-cases/login.usecase");
@@ -13,19 +13,6 @@ const signupUseCase = new signup_usecase_1.SignUpUseCase(userRepository);
 const loginUseCase = new login_usecase_1.LoginUseCase(userRepository);
 const sendOtpUseCase = new sendOtp_usecase_1.SendOtpUseCase(otpRepository, userRepository);
 const verifyOtpUseCase = new verifyOtp_usecase_1.VerifyOtpUseCase(otpRepository);
-const signup = async (req, res) => {
-    const { username, password, email } = req.body;
-    try {
-        await signupUseCase.execute(username, password, email);
-        res.status(201).json({ message: "user created and saved successfully" });
-    }
-    catch (error) {
-        res
-            .status(400)
-            .json({ message: "something went wrong in signup controller", error });
-    }
-};
-exports.signup = signup;
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -62,9 +49,7 @@ const verifyOtpAndSignUp = async (req, res) => {
         res.status(201).json({ message: "User created successfully " });
     }
     catch (error) {
-        res
-            .status(401)
-            .json({
+        res.status(401).json({
             message: "something went wrong while verifyOtpAndSignUp",
             error,
         });
