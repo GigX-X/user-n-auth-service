@@ -3,16 +3,15 @@ import { IUserRepo } from "../../interfaces/repositories/user-repo.interface";
 import { ISignupUseCase } from "../../interfaces/use-cases/user/signup-usecase.interface";
 import bcryptjs from "bcryptjs";
 
-
 export class SignUpUseCase implements ISignupUseCase {
   constructor(private userRepository: IUserRepo) {}
   async execute(
-    username: string,
+    email: string,
     password: string,
-    email: string
+    username: string
   ): Promise<void | string> {
     const hashedPassword = await bcryptjs.hash(password, 10);
-    const user = new User(username, hashedPassword, email);
+    const user = new User(email, hashedPassword, username);
     await this.userRepository.addUser(user);
   }
 }

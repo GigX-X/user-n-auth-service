@@ -23,7 +23,6 @@ export class LoginUseCase implements ILoginUseCase {
       process.env.JWT_SECRET as string,
       { expiresIn: "1h" }
     );
-      console.log(token);
     return token;
   }
 }

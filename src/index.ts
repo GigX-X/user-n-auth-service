@@ -10,8 +10,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/auth", authRoute);
-app.use("/api/admin", adminRoute);
+app.use("/auth", authRoute);
+app.use("/admin", adminRoute);
 
 connectDB();
 
