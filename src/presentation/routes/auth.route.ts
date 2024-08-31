@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.post("/send-otp", sendOtp);
-router.post("/login", login);
 router.post("/signup", verifyOtpAndSignUp);
+router.post("/login", login);
 
 export default router;

@@ -14,10 +14,12 @@ export const adminLogin = async (
     req: LoginRequest,
     res: Response
   ): Promise<void> => {
+    console.log("inside admin login")
     const { email, password } = req.body;
     try {
       const result = await adminLoginUseCase.execute(email, password);
-      res.status(201).json({ message: "logged in successfully", result });
+      console.log(result);
+      res.status(201).json({ message: "logged in successfully", token: result });
     } catch (error) {
       res
         .status(402)
@@ -33,6 +35,6 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         res
         .status(402)
-        .json({ message: "something went wrong in login controller", error });
+        .json({ message: "something went wrong in getUsers controller", error });
     }
 }
