@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-// import { config } from "dotenv";
-
-// config();
-// console.log(process.env.MONGODB_URI);
 
 const connectDB = async (): Promise<void> => {
   try {
