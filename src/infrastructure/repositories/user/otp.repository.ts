@@ -1,16 +1,26 @@
 import {IOtp}  from "../../../application/interfaces/repositories/otp-repo.interface";
 import { Otp } from "../../../domain/entities/otp";
-import { OtpModel } from "../../models/otp.schema";
+import { UserData } from "../../../shared/types/express";
+import redis from "../../db/redis";
 
 
 export class OtpRepository implements IOtp {
-    async createOtp(email: string, otp: string): Promise<void> {
-        const otpDoc = new OtpModel({ email, otp });
-        await otpDoc.save();
-        console.log("email otp:" + otp);
+    async createOtp(token: string, userData: UserData, otp: string): Promise<void> {
+        const redisClient = await redis();
+        await redisClient.setEx(
+            `registration:${token}`,
+            120,
+            JSON.stringify({userData, otp})
+        )
     }
    
-    async findOtpByEmail(email: string): Promise<Otp | null> {
-        return await OtpModel.findOne({ email });
+    async verifyOtpWithToken(key: string): Promise<string | null> {
+        const redisClient = await redis();
+        return await redisClient.get(key);
     }
+
+    async removeOtp(key: string): Promise<void> {
+        const redisClient = await redis();
+        await redisClient.del(key);
+    }    
 }

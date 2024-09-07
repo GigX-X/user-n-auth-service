@@ -1,4 +1,5 @@
-import { OAuth2 } from "nodemailer/lib/smtp-connection";
+import { UserData } from "../../../../shared/types/express";
+
 export interface ISendOtpUseCase {
-    execute(email: string): Promise<void>;
+    execute(userData: UserData): Promise<string>;
 }

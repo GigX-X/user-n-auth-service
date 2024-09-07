@@ -10,14 +10,22 @@ export interface LoginRequest extends Request {
 export interface sendOtpRequest extends Request {
   body: {
     email: string;
+    password: string;
+    username: string;
+    role: string;
   };
 }
 
 export interface verifyOtpRequest extends Request {
   body: {
-    email: string;
-    password: string;
-    username: string;
+    token: string;
     otp: string;
   };
+}
+
+export type UserData = {
+  email: string;
+  password: string;
+  username: string;
+  role: string;
 }

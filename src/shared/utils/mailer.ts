@@ -1,11 +1,16 @@
 import { config } from "dotenv";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 config({ path: __dirname + "/../../../.env" });
 
 export const generateOtp = (): string => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
+
+export const generateToken = (): string => {
+  return crypto.randomBytes(32).toString('hex');
+}
 
 export const sendMail = async (to: string, otp: string): Promise<void> => {
   console.log(process.env.EMAIL, process.env.PASS);

@@ -1,3 +1,5 @@
+import { UserData } from "../../../../shared/types/express";
+
 export interface IVerifyOtpUseCase {
-    execute(email: string, otp: string): Promise<boolean>;
+    execute(token: string, otp: string): Promise<UserData | null>;
 }

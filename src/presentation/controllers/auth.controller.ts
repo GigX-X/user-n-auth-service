@@ -38,8 +38,8 @@ export const sendOtp = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { email } = req.body;
-    await sendOtpUseCase.execute(email);
+    const { ...userData } = req.body;
+    await sendOtpUseCase.execute(userData);
     res.status(200).json({ message: "OTP send successfully" });
   } catch (error) {
     res
@@ -53,11 +53,14 @@ export const verifyOtpAndSignUp = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { email, password, username, otp } = req.body;
-    const isOtpValid = await verifyOtpUseCase.execute(email, otp);
-    if (!isOtpValid) res.status(401).json({ message: "invalid OTP" });
+    const { token, otp } = req.body;
 
-    await signupUseCase.execute(email, password, username);
+    const verifiedUserData = await verifyOtpUseCase.execute(token, otp);
+    if(verifiedUserData) {
+      await signupUseCase.execute(verifiedUserData);
+    } else {
+      res.status(401).json({ message: "Invalid or expired OTP" });
+    }
 
     res.status(201).json({ message: "User created successfully " });
   } catch (error) {
