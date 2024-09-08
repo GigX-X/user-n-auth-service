@@ -22,6 +22,8 @@ export class SendOtpUseCase implements ISendOtpUseCase {
     const otp = generateOtp();
     const token = generateToken();
 
+    console.log("otp and token are", otp, token);
+
     await this.otpRepository.createOtp(token, userData, otp);
     await sendMail(email, otp);
 

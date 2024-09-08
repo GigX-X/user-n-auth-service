@@ -13,7 +13,6 @@ export const generateToken = (): string => {
 }
 
 export const sendMail = async (to: string, otp: string): Promise<void> => {
-  console.log(process.env.EMAIL, process.env.PASS);
 
   const transporter = nodemailer.createTransport({
     service: "gmail",

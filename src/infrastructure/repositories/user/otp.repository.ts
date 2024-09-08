@@ -1,5 +1,4 @@
 import {IOtp}  from "../../../application/interfaces/repositories/otp-repo.interface";
-import { Otp } from "../../../domain/entities/otp";
 import { UserData } from "../../../shared/types/express";
 import redis from "../../db/redis";
 
