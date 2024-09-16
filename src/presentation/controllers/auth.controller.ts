@@ -40,8 +40,8 @@ export const sendOtp = async (
   try {
     console.log("inside sendOtp controller function")
     const { ...userData } = req.body;
-    await sendOtpUseCase.execute(userData);
-    res.status(200).json({ message: "OTP send successfully" });
+    const token = await sendOtpUseCase.execute(userData);
+    res.status(200).json(token);
   } catch (error) {
     res
       .status(401)

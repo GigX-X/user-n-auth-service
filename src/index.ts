@@ -10,32 +10,29 @@ config({ path: __dirname + "/../.env" });
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:4000"];
+const allowedOrigins = [
+  "http://localhost:4000",
+];
 
 const corsOptions = {
   origin: allowedOrigins,
-  credentials: true,
+  methods:["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  console.log("bodyyyy", JSON.stringify(req.body));
-  next();
-});
-
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-
-connectDB();
-connectRedis();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
 
 app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
+
+connectDB();
+connectRedis();
 
 app.listen(process.env.PORT || 4001, () =>
   console.log("user service listening actively...")
